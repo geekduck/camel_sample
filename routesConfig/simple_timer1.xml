@@ -8,24 +8,49 @@
           http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
 	<camelContext xmlns="http://camel.apache.org/schema/spring">
-		<route id="simple-timer-1">
-			<from uri="quartz2://myGroupName/myTimerName?cron=0+*/3+*+*+*+?"/>
-			<log message="program start"/>
+		<route id="simple-timer-1-1">
+			<from uri="quartz2://myTimerName1?cron=0,20,40+*/1+*+*+*+?&amp;deleteJob=true&amp;stateful=true"/>
+			<log message="program start1"/>
 			<doTry>
-				<to uri="direct:putlog"/>
+				<to uri="direct:putlog1-1"/>
 				<doCatch>
 					<exception>org.apache.camel.http.common.HttpOperationFailedException</exception>
 					<exception>java.lang.IllegalStateException</exception>
 					<log message="file get failed"/>
 				</doCatch>
 			</doTry>
-			<log message="complete!"/>
+			<log message="111111111111111complete!!!!!!!!!!!!!!!!!!!!!!"/>
 		</route>
 
-		<route id="simple-timer-2">
-			<from uri="direct:putlog"/>
+		<route id="simple-timer-1-2">
+			<from uri="direct:putlog1-1"/>
 			<to uri="mock:hogehoge" />
-			<log message="simple-timer-2:complete!"/>
+			<to uri="direct:exec-command-1" />
+			<log message="simple-timer-1-2:complete!"/>
+		</route>
+
+    <route id="simple-timer-1-3">
+      <from uri="direct:exec-command-1"/>
+			<log message="begin exec command" />
+			<log message="echo simple-timer-1-3 `date` > /tmp/simple-timer-1-3.log" />
+
+
+			<doTry>
+  			<!-- <to uri="exec:ls?args=-alh&amp;workingDir=/tmp"/> -->
+        <recipientList>
+          <simple>exec:/tmp/test.sh?args=simple-timer-1-3&amp;workingDir=/tmp/&amp;timeout=30000</simple>
+        </recipientList>
+        <doCatch>
+          <exception>org.apache.camel.component.exec.ExecException</exception>
+          <log message="コマンドが見つかりませんでした"/>
+        </doCatch>
+      </doTry>
+      <filter>
+          <simple>${body.exitValue} != 0</simple>
+    			<log message="end exec command ${body.exitValue}" loggingLevel="ERROR" />
+      </filter>
+			<log message="end exec command ${body.exitValue}" />
+			<log message="simple-timer-1-3 complete!" />
 		</route>
 
 	</camelContext>

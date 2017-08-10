@@ -20,21 +20,24 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://repository.apache.org/content/repositories/snapshots/"
+    }
 }
 
 
 dependencies {
-    compile('org.apache.camel:camel-core:2.19.0')
-    compile('org.apache.camel:camel-spring:2.19.0')
-    compile('org.apache.camel:camel-csv:2.19.0')
-    compile('org.apache.camel:camel-bindy:2.19.0')
-    compile('org.apache.camel:camel-stream:2.19.0')
-    compile('org.apache.camel:camel-http4:2.19.0')
-    compile('org.apache.camel:camel-servlet:2.19.0')
-    compile('org.apache.camel:camel-exec:2.19.0')
-    compile('org.apache.camel:camel-quartz2:2.19.0')
-    compile('org.apache.camel:camel-ftp:2.19.0')
-    compile('org.apache.camel:camel-metrics:2.19.0')
+    compile('org.apache.camel:camel-core:2.19.1')
+    compile('org.apache.camel:camel-spring:2.19.1')
+    compile('org.apache.camel:camel-csv:2.19.1')
+    compile('org.apache.camel:camel-bindy:2.19.1')
+    compile('org.apache.camel:camel-stream:2.19.1')
+    compile('org.apache.camel:camel-http4:2.19.1')
+    compile('org.apache.camel:camel-servlet:2.19.1')
+    compile('org.apache.camel:camel-exec:2.19.1')
+    compile('org.apache.camel:camel-quartz2:2.19.1')
+    compile('org.apache.camel:camel-ftp:2.19.1')
+    compile('org.apache.camel:camel-metrics:2.19.1')
     compile('org.apache.commons:commons-lang3:3.5')
     compile('org.yaml:snakeyaml:1.18')
     compile('commons-io:commons-io:2.5')
